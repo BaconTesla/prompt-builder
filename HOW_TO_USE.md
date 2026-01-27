@@ -50,7 +50,7 @@ http://localhost:3000
 ### Option 2: Start Fresh (if server stopped)
 
 ```bash
-cd /Users/dfwlab/project/aiprompt/prompt-builder
+cd ~/prompt-builder
 npm run dev
 ```
 
@@ -121,7 +121,7 @@ Then visit http://localhost:3000
 ## 📁 Project Location
 
 ```
-/Users/dfwlab/project/aiprompt/prompt-builder/
+~/prompt-builder
 ```
 
 ### Key Files to Know
@@ -171,7 +171,7 @@ npm install
 
 ```bash
 npm install -g vercel
-cd /Users/dfwlab/project/aiprompt/prompt-builder
+~/prompt-builder
 vercel
 ```
 
@@ -260,7 +260,7 @@ Follow the prompts, and you'll get a live URL in seconds.
 ### "Cannot find module" errors
 
 ```bash
-cd /Users/dfwlab/project/aiprompt/prompt-builder
+~/prompt-builder
 rm -rf node_modules package-lock.json
 npm install
 ```

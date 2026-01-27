@@ -59,7 +59,7 @@ prompt-builder/
 ### 1. Start the Development Server
 
 ```bash
-cd /Users/dfwlab/project/aiprompt/prompt-builder
+~/prompt-builder
 npm run dev
 ```
 

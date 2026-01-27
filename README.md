@@ -22,6 +22,12 @@ A single-page application built with Next.js that helps users design structured 
 
 ### Installation
 
+0. Clone this repo
+
+```
+git clone https://github.com/BaconTesla/prompt-builder.git
+```
+
 1. Navigate to the project directory:
 
 ```bash

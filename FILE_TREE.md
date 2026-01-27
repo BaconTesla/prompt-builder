@@ -161,7 +161,7 @@ Bundle Size (gzipped): <100KB
 └─────────────────────────────────────────────────────────────────────────────┘
 
 Development Mode:
-$ cd /Users/dfwlab/project/aiprompt/prompt-builder
+$ cd ~/prompt-builder
 $ npm run dev
 → http://localhost:3000
 

@@ -1,9 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { FiPlus, FiCopy, FiRefreshCw, FiCheck } from "react-icons/fi";
+import {
+  FiPlus,
+  FiCopy,
+  FiRefreshCw,
+  FiCheck,
+  FiHelpCircle,
+} from "react-icons/fi";
 import copy from "clipboard-copy";
 import PromptSection from "@/components/PromptSection";
+import HelpDialog from "@/components/HelpDialog";
 import { generateXml, type Section } from "@/utils/xmlHelpers";
 
 export default function Home() {
@@ -12,6 +19,7 @@ export default function Home() {
     { tag: "task", content: "" },
   ]);
   const [copied, setCopied] = useState(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
 
   const handleAddSection = () => {
     setSections([...sections, { tag: "", content: "" }]);
@@ -81,12 +89,24 @@ export default function Home() {
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <h1 className="text-3xl font-bold text-gray-900">
-            LLM Prompt Builder
-          </h1>
-          <p className="mt-2 text-sm text-gray-600">
-            Design structured prompts for large language models using XML format
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">
+                LLM Prompt Builder
+              </h1>
+              <p className="mt-2 text-sm text-gray-600">
+                Design structured prompts for large language models using XML
+                format
+              </p>
+            </div>
+            <button
+              onClick={() => setIsHelpOpen(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition-colors"
+            >
+              <FiHelpCircle size={20} />
+              Help
+            </button>
+          </div>
         </div>
       </header>
 
@@ -218,6 +238,9 @@ export default function Home() {
       <footer className="mt-16 py-6 text-center text-sm text-gray-600">
         <p>Built with Next.js, React, and Tailwind CSS</p>
       </footer>
+
+      {/* Help Dialog */}
+      <HelpDialog isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
     </div>
   );
 }

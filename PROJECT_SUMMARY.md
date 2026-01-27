@@ -271,7 +271,7 @@ border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500
 ### Development Mode
 
 ```bash
-cd /Users/dfwlab/project/aiprompt/prompt-builder
+~/prompt-builder
 npm run dev
 ```
 
@@ -551,7 +551,7 @@ The **LLM Prompt Builder** is complete and production-ready. All code is clean, 
 ### Access Your Application
 
 ```bash
-cd /Users/dfwlab/project/aiprompt/prompt-builder
+~/prompt-builder
 npm run dev
 ```
 
