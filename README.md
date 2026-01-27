@@ -1,36 +1,132 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LLM Prompt Builder
+
+A single-page application built with Next.js that helps users design structured prompts for large language models by organizing them into an XML format.
+
+## Features
+
+- **Dynamic Section Management**: Add, edit, delete, and reorder prompt sections
+- **Preset & Custom Tags**: Choose from common tags (role, task, instructions, etc.) or create your own
+- **Real-time XML Preview**: See your structured prompt update as you type
+- **Copy to Clipboard**: One-click copying of the complete XML prompt
+- **XML Character Escaping**: Automatically handles special XML characters
+- **Tag Validation**: Ensures all custom tags follow XML naming conventions
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Clean UI**: Built with Tailwind CSS for a modern, minimalistic interface
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18.17 or later
+- npm, yarn, or pnpm
+
+### Installation
+
+1. Navigate to the project directory:
+
+```bash
+cd prompt-builder
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Add Sections**: Click the "Add Section" button to create new prompt sections
+2. **Choose Tags**: Select from preset tags (role, task, instructions, etc.) or switch to custom mode to create your own
+3. **Enter Content**: Fill in the content for each section
+4. **Reorder**: Use the up/down arrow buttons to rearrange sections
+5. **Preview**: View the generated XML in real-time on the right panel
+6. **Copy**: Click "Copy to Clipboard" to copy the complete XML prompt
+7. **Reset**: Click "Reset" to start over with default sections
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+prompt-builder/
+├── src/
+│   ├── app/
+│   │   ├── page.tsx          # Main page component
+│   │   ├── layout.tsx         # Root layout
+│   │   └── globals.css        # Global styles
+│   ├── components/
+│   │   └── PromptSection.tsx  # Individual section component
+│   └── utils/
+│       └── xmlHelpers.ts      # XML generation and validation utilities
+├── public/                     # Static assets
+├── package.json
+└── README.md
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Technologies Used
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Next.js 15**: React framework with App Router
+- **React 19**: UI library
+- **TypeScript**: Type-safe development
+- **Tailwind CSS**: Utility-first CSS framework
+- **react-icons**: Icon library (Feather icons)
+- **clipboard-copy**: Clipboard API wrapper
 
-## Deploy on Vercel
+## Building for Production
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run build
+npm start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploying to Vercel
+
+The easiest way to deploy this Next.js app is using [Vercel](https://vercel.com):
+
+1. Push your code to a Git repository (GitHub, GitLab, Bitbucket)
+2. Import your repository to Vercel
+3. Vercel will automatically detect Next.js and configure the build settings
+4. Click "Deploy"
+
+Alternatively, use the Vercel CLI:
+
+```bash
+npm install -g vercel
+vercel
+```
+
+## Key Components
+
+### PromptSection Component
+
+Handles individual sections with:
+
+- Tag selection (preset or custom)
+- Content input via textarea
+- Move up/down functionality
+- Delete capability
+- XML tag validation
+
+### XML Helpers Utility
+
+Provides:
+
+- `escapeXml()`: Escapes special XML characters
+- `isValidTagName()`: Validates XML tag names
+- `generateXml()`: Generates complete XML from sections array
+- `COMMON_TAGS`: List of suggested tag names
+
+## License
+
+MIT
+
+## Contributing
+
+Feel free to submit issues and pull requests to improve the application.
