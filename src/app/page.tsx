@@ -11,6 +11,7 @@ import {
 import copy from "clipboard-copy";
 import PromptSection from "@/components/PromptSection";
 import HelpDialog from "@/components/HelpDialog";
+import TagPanel from "@/components/TagPanel";
 import { generateXml, type Section } from "@/utils/xmlHelpers";
 
 export default function Home() {
@@ -167,6 +168,8 @@ export default function Home() {
                       canMoveDown={index < sections.length - 1}
                       index={index}
                       availableTags={availableTags}
+                      onAddSection={handleAddSection}
+                      isLast={index === sections.length - 1}
                     />
                   );
                 })}
@@ -175,68 +178,73 @@ export default function Home() {
           </div>
 
           {/* Right Panel - Preview */}
-          <div className="lg:sticky lg:top-8 h-fit">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">
-                  XML Preview
-                </h2>
-                <button
-                  onClick={handleCopy}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all ${
-                    copied
-                      ? "bg-green-600 text-white"
-                      : "bg-blue-600 hover:bg-blue-700 text-white"
-                  }`}
-                >
-                  {copied ? (
-                    <>
-                      <FiCheck size={16} />
-                      Copied!
-                    </>
-                  ) : (
-                    <>
-                      <FiCopy size={16} />
-                      Copy to Clipboard
-                    </>
-                  )}
-                </button>
-              </div>
+          <div>
+            <div className="lg:sticky lg:top-8 space-y-4">
+              <div className="bg-white rounded-lg shadow-md p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-semibold text-gray-900">
+                    XML Preview
+                  </h2>
+                  <button
+                    onClick={handleCopy}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all ${
+                      copied
+                        ? "bg-green-600 text-white"
+                        : "bg-blue-600 hover:bg-blue-700 text-white"
+                    }`}
+                  >
+                    {copied ? (
+                      <>
+                        <FiCheck size={16} />
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <FiCopy size={16} />
+                        Copy to Clipboard
+                      </>
+                    )}
+                  </button>
+                </div>
 
-              <div className="relative">
-                <pre className="bg-gray-900 text-gray-100 p-4 rounded-md overflow-x-auto text-sm font-mono">
-                  <code>{xmlOutput}</code>
-                </pre>
-              </div>
+                <div className="relative">
+                  <pre className="bg-gray-900 text-gray-100 p-4 rounded-md overflow-x-auto text-sm font-mono">
+                    <code>{xmlOutput}</code>
+                  </pre>
+                </div>
 
-              {/* Stats */}
-              <div className="mt-4 pt-4 border-t border-gray-200">
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span className="text-gray-600">Sections:</span>
-                    <span className="ml-2 font-semibold text-gray-900">
-                      {sections.length}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-gray-600">Characters:</span>
-                    <span className="ml-2 font-semibold text-gray-900">
-                      {xmlOutput.length}
-                    </span>
+                {/* Stats */}
+                <div className="mt-4 pt-4 border-t border-gray-200">
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="text-gray-600">Sections:</span>
+                      <span className="ml-2 font-semibold text-gray-900">
+                        {sections.length}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-gray-600">Characters:</span>
+                      <span className="ml-2 font-semibold text-gray-900">
+                        {xmlOutput.length}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Tips */}
-            <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <h3 className="font-semibold text-blue-900 mb-2">💡 Tips</h3>
-              <ul className="text-sm text-blue-800 space-y-1">
-                <li>• Use preset tags or create custom ones</li>
-                <li>• Reorder sections with up/down arrows</li>
-                <li>• Empty tags will be filtered out in XML</li>
-                <li>• Special characters are automatically escaped</li>
-              </ul>
+              {/* Tag Panel */}
+              <TagPanel sections={sections} onReorder={setSections} />
+
+              {/* Tips */}
+              <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <h3 className="font-semibold text-blue-900 mb-2">💡 Tips</h3>
+                <ul className="text-sm text-blue-800 space-y-1">
+                  <li>• Use preset tags or create custom ones</li>
+                  <li>• Drag tags below to reorder sections</li>
+                  <li>• Empty tags will be filtered out in XML</li>
+                  <li>• Special characters are automatically escaped</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

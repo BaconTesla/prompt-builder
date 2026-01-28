@@ -1,7 +1,13 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { FiTrash2, FiChevronUp, FiChevronDown, FiTag } from "react-icons/fi";
+import {
+  FiTrash2,
+  FiChevronUp,
+  FiChevronDown,
+  FiTag,
+  FiPlus,
+} from "react-icons/fi";
 import { COMMON_TAGS, isValidTagName } from "@/utils/xmlHelpers";
 
 interface PromptSectionProps {
@@ -16,6 +22,8 @@ interface PromptSectionProps {
   canMoveDown: boolean;
   index: number;
   availableTags: string[];
+  onAddSection?: () => void;
+  isLast?: boolean;
 }
 
 export default function PromptSection({
@@ -30,6 +38,8 @@ export default function PromptSection({
   canMoveDown,
   index,
   availableTags,
+  onAddSection,
+  isLast = false,
 }: PromptSectionProps) {
   const [customTag, setCustomTag] = useState(
     !COMMON_TAGS.includes(tag) && tag !== "",
@@ -161,29 +171,43 @@ export default function PromptSection({
               rows={4}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none resize-y"
             />
-            {availableTags.length > 0 && (
-              <div className="mt-2 relative">
-                <button
-                  onClick={() => setShowTagMenu(!showTagMenu)}
-                  className="flex items-center gap-1 px-3 py-1 text-sm bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-md transition-colors"
-                  type="button"
-                >
-                  <FiTag size={14} />
-                  Insert Tag
-                </button>
-                {showTagMenu && (
-                  <div className="absolute left-0 mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10 max-h-48 overflow-y-auto">
-                    {availableTags.map((t) => (
-                      <button
-                        key={t}
-                        onClick={() => insertTag(t)}
-                        className="block w-full text-left px-4 py-2 hover:bg-indigo-50 text-sm font-mono"
-                        type="button"
-                      >
-                        &lt;{t}&gt;
-                      </button>
-                    ))}
+            {(availableTags.length > 0 || isLast) && (
+              <div className="mt-2 relative flex items-center justify-between">
+                {availableTags.length > 0 && (
+                  <div className="relative">
+                    <button
+                      onClick={() => setShowTagMenu(!showTagMenu)}
+                      className="flex items-center gap-1 px-3 py-1 text-sm bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-md transition-colors"
+                      type="button"
+                    >
+                      <FiTag size={14} />
+                      Insert Tag
+                    </button>
+                    {showTagMenu && (
+                      <div className="absolute left-0 mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10 max-h-48 overflow-y-auto">
+                        {availableTags.map((t) => (
+                          <button
+                            key={t}
+                            onClick={() => insertTag(t)}
+                            className="block w-full text-left px-4 py-2 hover:bg-indigo-50 text-sm font-mono"
+                            type="button"
+                          >
+                            &lt;{t}&gt;
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
+                )}
+                {isLast && onAddSection && (
+                  <button
+                    onClick={onAddSection}
+                    className="flex items-center justify-center w-8 h-8 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-full border-2 border-dashed border-indigo-300 hover:border-indigo-400 transition-colors"
+                    type="button"
+                    title="Add new section"
+                  >
+                    <FiPlus size={18} />
+                  </button>
                 )}
               </div>
             )}
