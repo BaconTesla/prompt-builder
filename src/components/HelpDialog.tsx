@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useCallback } from "react";
 import { FiX } from "react-icons/fi";
 
 interface HelpDialogProps {
@@ -116,16 +117,31 @@ Current focus is on improving performance and user experience.
 ];
 
 export default function HelpDialog({ isOpen, onClose }: HelpDialogProps) {
-  if (!isOpen) return null;
+  const [isClosing, setIsClosing] = useState(false);
+
+  const handleClose = useCallback(() => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClosing(false);
+      onClose();
+    }, 200);
+  }, [onClose]);
+
+  if (!isOpen && !isClosing) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+    <div
+      className={`fixed inset-0 glass-overlay flex items-center justify-center z-50 p-4 dialog-overlay ${isClosing ? "closing" : ""}`}
+      onClick={(e) => e.target === e.currentTarget && handleClose()}
+    >
+      <div
+        className={`glass-effect rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col dialog-content ${isClosing ? "closing" : ""}`}
+      >
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-4 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-blue-600/90 to-indigo-600/90 backdrop-blur-sm text-white px-6 py-4 flex items-center justify-between rounded-t-2xl">
           <h2 className="text-2xl font-bold">📚 XML Tag Usage Guide</h2>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="p-1 hover:bg-white hover:bg-opacity-20 rounded-full transition-colors group"
             aria-label="Close"
           >
@@ -228,9 +244,9 @@ export default function HelpDialog({ isOpen, onClose }: HelpDialogProps) {
         </div>
 
         {/* Footer */}
-        <div className="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-end">
+        <div className="bg-white/50 backdrop-blur-sm px-6 py-4 border-t border-gray-200/50 flex justify-end rounded-b-2xl">
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors font-medium"
           >
             Got it

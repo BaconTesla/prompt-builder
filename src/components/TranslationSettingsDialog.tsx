@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   FiX,
   FiGlobe,
@@ -33,6 +33,11 @@ export default function TranslationSettingsDialog({
 }: TranslationSettingsDialogProps) {
   const { settings, updateSettings, clearCache } = useTranslation();
   const [showApiKey, setShowApiKey] = useState(false);
+
+  const [isClosing, setIsClosing] = useState(false);
+
+  // Derive isVisible from isOpen and isClosing - no need for separate state
+  const isVisible = isOpen || isClosing;
 
   const currentProvider = PROVIDERS.find((p) => p.value === settings.provider);
   const hasModels =
@@ -94,19 +99,35 @@ export default function TranslationSettingsDialog({
     }
   };
 
-  if (!isOpen) return null;
+  const handleClose = useCallback(() => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClosing(false);
+      onClose();
+    }, 200);
+  }, [onClose]);
+
+  // Reset isClosing when dialog opens (derived from props change)
+  const shouldShow = isOpen && !isClosing;
+  
+  if (!isOpen && !isClosing) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+    <div
+      className={`fixed inset-0 glass-overlay flex items-center justify-center z-50 p-4 dialog-overlay ${isClosing ? "closing" : ""}`}
+      onClick={(e) => e.target === e.currentTarget && handleClose()}
+    >
+      <div
+        className={`glass-effect rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col dialog-content ${isClosing ? "closing" : ""}`}
+      >
         {/* Header */}
-        <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-4 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-green-600/90 to-emerald-600/90 backdrop-blur-sm text-white px-6 py-4 flex items-center justify-between rounded-t-2xl">
           <div className="flex items-center gap-3">
             <FiGlobe size={24} />
             <h2 className="text-2xl font-bold">Translation Settings</h2>
           </div>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="p-1 hover:bg-white hover:bg-opacity-20 rounded-full transition-colors group"
             aria-label="Close"
           >
@@ -362,10 +383,10 @@ export default function TranslationSettingsDialog({
         </div>
 
         {/* Footer */}
-        <div className="bg-gray-50 px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+        <div className="bg-white/50 backdrop-blur-sm px-6 py-4 border-t border-gray-200/50 flex items-center justify-between rounded-b-2xl">
           <button
             onClick={clearCache}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-gray-200/80 hover:bg-gray-300/80 text-gray-700 rounded-md transition-colors"
             title="Clear translation cache"
             aria-label="Clear translation cache"
           >
@@ -377,7 +398,7 @@ export default function TranslationSettingsDialog({
               <button
                 onClick={() => {
                   onTranslateAll();
-                  onClose();
+                  handleClose();
                 }}
                 disabled={isTranslatingAll}
                 className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white rounded-md transition-colors"
@@ -397,7 +418,7 @@ export default function TranslationSettingsDialog({
               </button>
             )}
             <button
-              onClick={onClose}
+              onClick={handleClose}
               className="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md transition-colors font-medium"
             >
               Done

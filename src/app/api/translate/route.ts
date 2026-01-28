@@ -231,7 +231,7 @@ async function translateWithLLM(
         selectedModel = "deepseek-chat";
         break;
       case "kimi":
-        selectedModel = "moonshot-v1-8k";
+        selectedModel = "kimi-k2-turbo-preview";
         break;
       default:
         selectedModel = "gpt-4o-mini";

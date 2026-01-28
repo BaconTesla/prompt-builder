@@ -89,19 +89,14 @@ export const PROVIDERS: ProviderOption[] = [
     value: "deepseek",
     label: "DeepSeek",
     description: "High-quality Chinese AI translation",
-    models: [
-      { value: "deepseek-chat", label: "DeepSeek Chat (Default)" },
-      { value: "deepseek-coder", label: "DeepSeek Coder" },
-    ],
+    models: [{ value: "deepseek-chat", label: "DeepSeek Chat" }],
   },
   {
     value: "kimi",
     label: "KIMI (Moonshot)",
     description: "Moonshot AI translation service",
     models: [
-      { value: "moonshot-v1-8k", label: "Moonshot V1 8K (Fast)" },
-      { value: "moonshot-v1-32k", label: "Moonshot V1 32K" },
-      { value: "moonshot-v1-128k", label: "Moonshot V1 128K (Best)" },
+      { value: "kimi-k2-turbo-preview", label: "Moonshot K2 Fast (Preview)" },
     ],
   },
   {

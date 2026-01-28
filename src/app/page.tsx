@@ -18,6 +18,7 @@ import PromptSection from "@/components/PromptSection";
 import HelpDialog from "@/components/HelpDialog";
 import TagPanel from "@/components/TagPanel";
 import TranslationSettingsDialog from "@/components/TranslationSettingsDialog";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import {
   TranslationProvider,
   useTranslation,
@@ -212,6 +213,9 @@ function HomeContent() {
               </p>
             </div>
             <div className="flex items-center gap-2">
+              {/* Language Switcher */}
+              <LanguageSwitcher />
+
               {/* Translate All Button */}
               <button
                 onClick={() => {
