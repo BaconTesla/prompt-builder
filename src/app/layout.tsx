@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "LLM Prompt Builder",
   description:
     "A tool to design structured prompts for large language models using XML format.",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

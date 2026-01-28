@@ -145,23 +145,31 @@ export default function Home() {
               </div>
             ) : (
               <div className="space-y-4">
-                {sections.map((section, index) => (
-                  <PromptSection
-                    key={index}
-                    tag={section.tag}
-                    content={section.content}
-                    onTagChange={(tag) => handleTagChange(index, tag)}
-                    onContentChange={(content) =>
-                      handleContentChange(index, content)
-                    }
-                    onDelete={() => handleDeleteSection(index)}
-                    onMoveUp={() => handleMoveUp(index)}
-                    onMoveDown={() => handleMoveDown(index)}
-                    canMoveUp={index > 0}
-                    canMoveDown={index < sections.length - 1}
-                    index={index}
-                  />
-                ))}
+                {sections.map((section, index) => {
+                  // Get all tags from other sections that have non-empty tags
+                  const availableTags = sections
+                    .filter((s, i) => i !== index && s.tag.trim() !== "")
+                    .map((s) => s.tag);
+
+                  return (
+                    <PromptSection
+                      key={index}
+                      tag={section.tag}
+                      content={section.content}
+                      onTagChange={(tag) => handleTagChange(index, tag)}
+                      onContentChange={(content) =>
+                        handleContentChange(index, content)
+                      }
+                      onDelete={() => handleDeleteSection(index)}
+                      onMoveUp={() => handleMoveUp(index)}
+                      onMoveDown={() => handleMoveDown(index)}
+                      canMoveUp={index > 0}
+                      canMoveDown={index < sections.length - 1}
+                      index={index}
+                      availableTags={availableTags}
+                    />
+                  );
+                })}
               </div>
             )}
           </div>
