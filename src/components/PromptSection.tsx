@@ -7,14 +7,19 @@ import {
   FiChevronDown,
   FiTag,
   FiPlus,
+  FiGlobe,
+  FiX,
 } from "react-icons/fi";
 import { COMMON_TAGS, isValidTagName } from "@/utils/xmlHelpers";
+import TranslateButton from "@/components/TranslateButton";
 
 interface PromptSectionProps {
   tag: string;
   content: string;
+  translatedContent?: string;
   onTagChange: (tag: string) => void;
   onContentChange: (content: string) => void;
+  onTranslatedContentChange?: (translatedContent: string) => void;
   onDelete: () => void;
   onMoveUp?: () => void;
   onMoveDown?: () => void;
@@ -29,8 +34,10 @@ interface PromptSectionProps {
 export default function PromptSection({
   tag,
   content,
+  translatedContent = "",
   onTagChange,
   onContentChange,
+  onTranslatedContentChange,
   onDelete,
   onMoveUp,
   onMoveDown,
@@ -46,6 +53,7 @@ export default function PromptSection({
   );
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [showTagMenu, setShowTagMenu] = useState(false);
+  const [showTranslation, setShowTranslation] = useState(false);
 
   const isValidTag = tag.trim() === "" || isValidTagName(tag);
 
@@ -171,8 +179,11 @@ export default function PromptSection({
               rows={4}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none resize-y"
             />
-            {(availableTags.length > 0 || isLast) && (
-              <div className="mt-2 relative flex items-center justify-between">
+
+            {/* Controls row */}
+            <div className="mt-2 flex items-center justify-between flex-wrap gap-2">
+              <div className="flex items-center gap-2">
+                {/* Insert Tag button */}
                 {availableTags.length > 0 && (
                   <div className="relative">
                     <button
@@ -199,16 +210,80 @@ export default function PromptSection({
                     )}
                   </div>
                 )}
-                {isLast && onAddSection && (
+
+                {/* Translate button */}
+                {content.trim() && onTranslatedContentChange && (
+                  <TranslateButton
+                    content={content}
+                    onTranslated={(translated) => {
+                      onTranslatedContentChange(translated);
+                      setShowTranslation(true);
+                    }}
+                  />
+                )}
+
+                {/* Show/hide translation toggle */}
+                {translatedContent && (
                   <button
-                    onClick={onAddSection}
-                    className="flex items-center justify-center w-8 h-8 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-full border-2 border-dashed border-indigo-300 hover:border-indigo-400 transition-colors"
+                    onClick={() => setShowTranslation(!showTranslation)}
+                    className={`flex items-center gap-1 px-2 py-1 text-xs rounded-md transition-colors ${
+                      showTranslation
+                        ? "bg-green-100 text-green-700"
+                        : "bg-gray-100 text-gray-600"
+                    }`}
                     type="button"
-                    title="Add new section"
+                    title={
+                      showTranslation ? "Hide translation" : "Show translation"
+                    }
                   >
-                    <FiPlus size={18} />
+                    <FiGlobe size={12} />
+                    {showTranslation ? "Hide" : "Show"}
                   </button>
                 )}
+              </div>
+
+              {/* Add section button */}
+              {isLast && onAddSection && (
+                <button
+                  onClick={onAddSection}
+                  className="flex items-center justify-center w-8 h-8 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-full border-2 border-dashed border-indigo-300 hover:border-indigo-400 transition-colors"
+                  type="button"
+                  title="Add new section"
+                >
+                  <FiPlus size={18} />
+                </button>
+              )}
+            </div>
+
+            {/* Translation preview */}
+            {showTranslation && translatedContent && (
+              <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-md">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-medium text-green-700 flex items-center gap-1">
+                    <FiGlobe size={12} />
+                    Translated Content
+                  </span>
+                  <button
+                    onClick={() => {
+                      if (onTranslatedContentChange) {
+                        onTranslatedContentChange("");
+                      }
+                      setShowTranslation(false);
+                    }}
+                    className="text-green-600 hover:text-green-800 p-1"
+                    title="Clear translation"
+                    type="button"
+                  >
+                    <FiX size={14} />
+                  </button>
+                </div>
+                <textarea
+                  value={translatedContent}
+                  onChange={(e) => onTranslatedContentChange?.(e.target.value)}
+                  rows={3}
+                  className="w-full px-2 py-1 text-sm bg-white border border-green-200 rounded focus:ring-2 focus:ring-green-500 focus:outline-none resize-y"
+                  placeholder="Translated content will appear here..."
+                />
               </div>
             )}
           </div>

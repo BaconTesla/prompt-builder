@@ -26,9 +26,13 @@ export function isValidTagName(tag: string): boolean {
 export interface Section {
   tag: string;
   content: string;
+  translatedContent?: string;
 }
 
-export function generateXml(sections: Section[]): string {
+export function generateXml(
+  sections: Section[],
+  useTranslated: boolean = false,
+): string {
   if (sections.length === 0) {
     return "<prompt>\n</prompt>";
   }
@@ -37,7 +41,12 @@ export function generateXml(sections: Section[]): string {
     .filter((section) => section.tag.trim() !== "")
     .map((section) => {
       const tag = section.tag.trim();
-      const content = escapeXml(section.content);
+      // Use translated content if available and requested, otherwise use original
+      const contentToUse =
+        useTranslated && section.translatedContent?.trim()
+          ? section.translatedContent
+          : section.content;
+      const content = escapeXml(contentToUse);
       return `  <${tag}>${content}</${tag}>`;
     })
     .join("\n");
