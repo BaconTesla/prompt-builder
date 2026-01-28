@@ -202,17 +202,17 @@ function HomeContent() {
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
                 LLM Prompt Builder
               </h1>
-              <p className="mt-2 text-sm text-gray-600">
+              <p className="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-600">
                 Design structured prompts for large language models using XML
                 format
               </p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               {/* Language Switcher */}
               <LanguageSwitcher />
 

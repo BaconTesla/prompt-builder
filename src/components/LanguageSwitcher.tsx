@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { FiRepeat } from "react-icons/fi";
 import { useTranslation } from "@/context/TranslationContext";
 import { LANGUAGES } from "@/types/translation";
@@ -68,12 +67,12 @@ export default function LanguageSwitcher() {
         title={`Source: ${getLanguageLabel(settings.sourceLanguage)}`}
       >
         {sourceDisplay.icon ? (
-          <Image
+          <img
             src={sourceDisplay.icon}
             alt={getLanguageLabel(settings.sourceLanguage)}
             width={20}
             height={20}
-            className="rounded-sm"
+            className="rounded-sm w-5 h-5"
           />
         ) : sourceDisplay.flag ? (
           <span className="text-base">{sourceDisplay.flag}</span>
@@ -100,12 +99,12 @@ export default function LanguageSwitcher() {
         title={`Target: ${getLanguageLabel(settings.targetLanguage)}`}
       >
         {targetDisplay.icon ? (
-          <Image
+          <img
             src={targetDisplay.icon}
             alt={getLanguageLabel(settings.targetLanguage)}
             width={20}
             height={20}
-            className="rounded-sm"
+            className="rounded-sm w-5 h-5"
           />
         ) : targetDisplay.flag ? (
           <span className="text-base">{targetDisplay.flag}</span>
