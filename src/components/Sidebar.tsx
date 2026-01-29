@@ -55,7 +55,7 @@ export default function Sidebar({
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden fixed top-4 left-4 z-40 p-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-lg"
+        className="lg:hidden fixed top-4 left-4 z-20 p-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-lg"
         aria-label="Toggle sidebar"
       >
         {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
@@ -64,7 +64,7 @@ export default function Sidebar({
       {/* Overlay for mobile */}
       {isOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-20"
+          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-10"
           onClick={() => setIsOpen(false)}
         />
       )}
