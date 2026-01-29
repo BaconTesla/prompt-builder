@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import Image from "next/image";
 import {
   FiPlus,
   FiCopy,
@@ -304,9 +305,15 @@ function HomeContent() {
                     }`}
                     title={`Current: ${currentProvider?.label || settings.provider}`}
                   >
-                    <span className="hidden sm:inline max-w-25 truncate">
-                      {currentProvider?.label || settings.provider}
-                    </span>
+                    {currentProvider?.icon && (
+                      <Image
+                        src={currentProvider.icon}
+                        alt={currentProvider.label}
+                        width={20}
+                        height={20}
+                        className="flex-shrink-0"
+                      />
+                    )}
                     <FiChevronDown
                       size={14}
                       className={`transition-transform ${isProviderDropdownOpen ? "rotate-180" : ""}`}
@@ -336,6 +343,15 @@ function HomeContent() {
                                   configured ? "bg-green-500" : "bg-gray-300"
                                 }`}
                               />
+                              {provider.icon && (
+                                <Image
+                                  src={provider.icon}
+                                  alt={provider.label}
+                                  width={16}
+                                  height={16}
+                                  className="flex-shrink-0"
+                                />
+                              )}
                               <span
                                 className={
                                   isActive

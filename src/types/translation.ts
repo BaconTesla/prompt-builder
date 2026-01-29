@@ -33,6 +33,7 @@ export interface ProviderOption {
   value: TranslationProvider;
   label: string;
   description: string;
+  icon?: string; // Path to icon in public folder
   models?: { value: string; label: string }[];
 }
 
@@ -59,16 +60,19 @@ export const PROVIDERS: ProviderOption[] = [
     value: "google",
     label: "Google Translate",
     description: "Fast and reliable traditional translation",
+    icon: "/icons/google-translate.svg",
   },
   {
     value: "deepl",
     label: "DeepL",
     description: "High-quality neural translation",
+    icon: "/icons/deepl.svg",
   },
   {
     value: "openai",
     label: "OpenAI (GPT)",
     description: "LLM-based translation",
+    icon: "/icons/openai.svg",
     models: [
       { value: "gpt-4o-mini", label: "GPT-4o Mini (Fast)" },
       { value: "gpt-4o", label: "GPT-4o (Best)" },
@@ -79,6 +83,7 @@ export const PROVIDERS: ProviderOption[] = [
     value: "groq",
     label: "Groq (Llama)",
     description: "Fast LLM translation with Llama models",
+    icon: "/icons/groq.svg",
     models: [
       { value: "llama-3.3-70b-versatile", label: "Llama 3.3 70B (Best)" },
       { value: "llama-3.1-8b-instant", label: "Llama 3.1 8B (Fast)" },
@@ -89,12 +94,14 @@ export const PROVIDERS: ProviderOption[] = [
     value: "deepseek",
     label: "DeepSeek",
     description: "High-quality Chinese AI translation",
+    icon: "/icons/deepseek.svg",
     models: [{ value: "deepseek-chat", label: "DeepSeek Chat" }],
   },
   {
     value: "kimi",
     label: "KIMI (Moonshot)",
     description: "Moonshot AI translation service",
+    icon: "/icons/kimi.svg",
     models: [
       { value: "kimi-k2-turbo-preview", label: "Moonshot K2 Fast (Preview)" },
     ],
@@ -103,6 +110,7 @@ export const PROVIDERS: ProviderOption[] = [
     value: "custom",
     label: "Custom OpenAI-Compatible API",
     description: "Ollama, LocalAI, or other compatible APIs",
+    icon: "/icons/custom.svg",
     models: [
       { value: "auto", label: "Auto-detect from provider" },
       { value: "llama2", label: "Llama 2" },
